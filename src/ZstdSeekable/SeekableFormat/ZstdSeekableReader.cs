@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Hashing;
 using Microsoft.Extensions.Logging;
 using ZstdSeekable.Internal;
 
@@ -133,8 +132,7 @@ namespace ZstdSeekable
 
             if (options.VerifyChecksums && SeekTable.HasChecksums)
             {
-                // Seekable-format spec, "Checksum": unchecked keeps XXH64's required low 32 bits.
-                var actual = unchecked((uint)XxHash64.HashToUInt64(decompressed));
+                var actual = ZstdSeekTableChecksum.Compute(decompressed);
                 if (actual != entry.Checksum)
                     throw new InvalidDataException($"XXH64 mismatch for the frame at {entry.CompressedOffset:N0}: table says 0x{entry.Checksum:X8}, data is 0x{actual:X8}.");
             }
