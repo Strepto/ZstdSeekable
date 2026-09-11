@@ -37,11 +37,11 @@ namespace ZstdSeekable.Tests
             Assert.IsTrue(table.HasChecksums);
             Assert.AreEqual(data.Length, table.UncompressedLength);
 
-            //every checksum matches an independent XXH32 of the corresponding plaintext slice
+            //every checksum matches the low 32 bits of an independent XXH64 of the plaintext slice
             foreach (var entry in table.Entries)
             {
                 var slice = TestData.Slice(data, entry.UncompressedOffset, (int)entry.UncompressedSize);
-                Assert.AreEqual(XxHash32.Hash(slice), entry.Checksum, $"checksum of frame at {entry.UncompressedOffset:N0}");
+                Assert.AreEqual(unchecked((uint)XxHash64.Hash(slice)), entry.Checksum, $"checksum of frame at {entry.UncompressedOffset:N0}");
             }
 
             //offsets are cumulative and gap-free

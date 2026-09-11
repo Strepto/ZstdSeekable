@@ -77,7 +77,7 @@ namespace ZstdSeekable
 
             var content = frameBuffer.AsSpan(0, frameBufferUsed);
             var compressed = compressor.Wrap(content);
-            var checksum = writeChecksums ? XxHash32.Hash(content) : 0;
+            var checksum = writeChecksums ? unchecked((uint)XxHash64.Hash(content)) : 0;
 
 #if NET8_0_OR_GREATER
             destination.Write(compressed);

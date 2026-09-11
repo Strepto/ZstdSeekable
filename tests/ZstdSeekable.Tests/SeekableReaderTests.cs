@@ -88,7 +88,7 @@ namespace ZstdSeekable.Tests
             }
 
             //flip a bit in the STORED checksum instead: the frame decodes fine, so this exercises the
-            //actual XXH32 comparison
+            //actual truncated XXH64 comparison
             var entrySize = 12;     //with checksums
             var tableStart = seekable.Length - 8 - (table.Entries.Count * entrySize + 9);
             var corruptedChecksum = (byte[])seekable.Clone();

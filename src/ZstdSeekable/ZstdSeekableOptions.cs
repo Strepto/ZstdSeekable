@@ -17,7 +17,7 @@ namespace ZstdSeekable
         /// <summary>Options for the custom index, when one has to be built.</summary>
         public ZstdIndexOptions Index { get; set; } = new();
 
-        /// <summary>Verify per-frame XXH32 checksums when reading official seekable-format input that
+        /// <summary>Verify per-frame truncated XXH64 checksums when reading official seekable-format input that
         /// carries them. Default false.</summary>
         public bool VerifyChecksums { get; set; }
 

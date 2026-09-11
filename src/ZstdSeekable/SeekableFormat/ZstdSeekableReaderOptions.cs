@@ -5,8 +5,8 @@ namespace ZstdSeekable
     /// <summary>Options for <see cref="ZstdSeekableReader"/>.</summary>
     public sealed class ZstdSeekableReaderOptions
     {
-        /// <summary>Verify each frame's XXH32 checksum (when the seek table carries checksums) as the
-        /// frame is decompressed. Default false.</summary>
+        /// <summary>Verify each frame's truncated XXH64 checksum (when the seek table carries
+        /// checksums) as the frame is decompressed. Default false.</summary>
         public bool VerifyChecksums { get; set; }
 
         /// <summary>

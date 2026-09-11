@@ -13,7 +13,7 @@ namespace ZstdSeekable
         /// </summary>
         public int MaxFrameSize { get; set; } = 1 * 1024 * 1024;
 
-        /// <summary>Store an XXH32 checksum per frame in the seek table. Default true.</summary>
+        /// <summary>Store the low 32 bits of each frame's XXH64 checksum in the seek table. Default true.</summary>
         public bool WriteChecksums { get; set; } = true;
     }
 }

@@ -132,9 +132,9 @@ namespace ZstdSeekable
 
             if (options.VerifyChecksums && SeekTable.HasChecksums)
             {
-                var actual = XxHash32.Hash(decompressed);
+                var actual = unchecked((uint)XxHash64.Hash(decompressed));
                 if (actual != entry.Checksum)
-                    throw new InvalidDataException($"XXH32 mismatch for the frame at {entry.CompressedOffset:N0}: table says 0x{entry.Checksum:X8}, data is 0x{actual:X8}.");
+                    throw new InvalidDataException($"XXH64 mismatch for the frame at {entry.CompressedOffset:N0}: table says 0x{entry.Checksum:X8}, data is 0x{actual:X8}.");
             }
 
             return decompressed;

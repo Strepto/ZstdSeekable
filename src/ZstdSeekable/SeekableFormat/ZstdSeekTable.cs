@@ -16,7 +16,7 @@ namespace ZstdSeekable
         public uint CompressedSize { get; }
         /// <summary>Decompressed size of the frame in bytes (0 for embedded skippable frames).</summary>
         public uint UncompressedSize { get; }
-        /// <summary>XXH32 (seed 0) of the frame's decompressed data; 0 when the table carries no checksums.</summary>
+        /// <summary>Low 32 bits of XXH64 (seed 0) of the frame's decompressed data; 0 when the table carries no checksums.</summary>
         public uint Checksum { get; }
 
         internal ZstdSeekTableEntry(long compressedOffset, long uncompressedOffset, uint compressedSize, uint uncompressedSize, uint checksum)
@@ -41,7 +41,7 @@ namespace ZstdSeekable
         /// (recognisable by <see cref="ZstdSeekTableEntry.UncompressedSize"/> == 0).</summary>
         public IReadOnlyList<ZstdSeekTableEntry> Entries { get; }
 
-        /// <summary>Whether the table stores an XXH32 checksum per frame.</summary>
+        /// <summary>Whether the table stores a truncated XXH64 checksum per frame.</summary>
         public bool HasChecksums { get; }
 
         /// <summary>Total compressed size of the data frames (the seek-table frame itself excluded).</summary>

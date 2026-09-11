@@ -35,7 +35,7 @@ using var stream = ZstdSeekableStream.OpenRead(compressed, indexStream);
 
 ### Writing seekable files
 
-`ZstdSeekableWriter` produces official seekable-format output — readable by any zstd decompressor, and instantly seekable by any seekable-format implementation (including this library):
+`ZstdSeekableWriter` produces official seekable-format output — readable by any zstd decompressor, and instantly seekable by any seekable-format implementation (including this library). When checksums are enabled, each seek-table entry stores the low 32 bits of the frame's XXH64 checksum.
 
 ```csharp
 using (var writer = ZstdSeekableWriter.Create("data.zst",
@@ -51,7 +51,7 @@ If you control how your files are compressed, prefer this — no index build is 
 
 ```csharp
 using var reader = ZstdSeekableReader.Open("data.zst",
-        new ZstdSeekableReaderOptions { VerifyChecksums = true });
+    new ZstdSeekableReaderOptions { VerifyChecksums = true });
 Console.WriteLine($"{reader.SeekTable.Entries.Count} frames, {reader.Length:N0} bytes uncompressed");
 ```
 
