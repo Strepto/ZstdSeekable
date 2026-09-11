@@ -1,6 +1,6 @@
+using System.IO.Hashing;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ZstdSeekable.Internal;
 
 namespace ZstdSeekable.Tests
 {
@@ -15,7 +15,7 @@ namespace ZstdSeekable.Tests
         [DataRow("The quick brown fox jumps over the lazy dog", 0x0B242D361FDA71BCUL)]
         public void MatchesReferenceVectors(string input, ulong expected)
         {
-            Assert.AreEqual(expected, XxHash64.Hash(Encoding.ASCII.GetBytes(input)));
+            Assert.AreEqual(expected, XxHash64.HashToUInt64(Encoding.ASCII.GetBytes(input)));
         }
     }
 }

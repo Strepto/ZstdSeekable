@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Hashing;
 using ZstdSeekable.Internal;
 
 namespace ZstdSeekable
@@ -78,7 +79,7 @@ namespace ZstdSeekable
             var content = frameBuffer.AsSpan(0, frameBufferUsed);
             var compressed = compressor.Wrap(content);
             // Seekable-format spec, "Checksum": unchecked keeps XXH64's required low 32 bits.
-            var checksum = writeChecksums ? unchecked((uint)XxHash64.Hash(content)) : 0;
+            var checksum = writeChecksums ? unchecked((uint)XxHash64.HashToUInt64(content)) : 0;
 
 #if NET8_0_OR_GREATER
             destination.Write(compressed);

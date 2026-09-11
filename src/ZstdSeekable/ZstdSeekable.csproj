@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="ZstdSharp.Port" Version="0.8.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+    <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="all" />
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
   </ItemGroup>

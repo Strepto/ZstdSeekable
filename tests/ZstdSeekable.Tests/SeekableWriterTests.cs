@@ -1,8 +1,8 @@
 using System;
 using System.IO;
+using System.IO.Hashing;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ZstdSeekable.Internal;
 
 namespace ZstdSeekable.Tests
 {
@@ -41,7 +41,7 @@ namespace ZstdSeekable.Tests
             foreach (var entry in table.Entries)
             {
                 var slice = TestData.Slice(data, entry.UncompressedOffset, (int)entry.UncompressedSize);
-                Assert.AreEqual(unchecked((uint)XxHash64.Hash(slice)), entry.Checksum, $"checksum of frame at {entry.UncompressedOffset:N0}");
+                Assert.AreEqual(unchecked((uint)XxHash64.HashToUInt64(slice)), entry.Checksum, $"checksum of frame at {entry.UncompressedOffset:N0}");
             }
 
             //offsets are cumulative and gap-free
