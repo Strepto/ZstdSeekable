@@ -77,6 +77,7 @@ namespace ZstdSeekable
 
             var content = frameBuffer.AsSpan(0, frameBufferUsed);
             var compressed = compressor.Wrap(content);
+            // Seekable-format spec, "Checksum": unchecked keeps XXH64's required low 32 bits.
             var checksum = writeChecksums ? unchecked((uint)XxHash64.Hash(content)) : 0;
 
 #if NET8_0_OR_GREATER

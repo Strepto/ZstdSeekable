@@ -132,6 +132,7 @@ namespace ZstdSeekable
 
             if (options.VerifyChecksums && SeekTable.HasChecksums)
             {
+                // Seekable-format spec, "Checksum": unchecked keeps XXH64's required low 32 bits.
                 var actual = unchecked((uint)XxHash64.Hash(decompressed));
                 if (actual != entry.Checksum)
                     throw new InvalidDataException($"XXH64 mismatch for the frame at {entry.CompressedOffset:N0}: table says 0x{entry.Checksum:X8}, data is 0x{actual:X8}.");
